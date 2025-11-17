@@ -218,25 +218,25 @@ docker compose ps
 
 ### Accès aux services
 
-- **Application** : http://localhost:8000
-- **API Docs** : http://localhost:8000/docs
-- **Monitoring V2** : http://localhost:8000/monitoring (Plotly)
-- **Prometheus** : http://localhost:9090
-- **Grafana** : http://localhost:3000 (admin/admin)
+- **Application** : http://localhost:8008
+- **API Docs** : http://localhost:8008/docs
+- **Monitoring V2** : http://localhost:8008/monitoring (Plotly)
+- **Prometheus** : http://localhost:9098
+- **Grafana** : http://localhost:3008 (admin/admin)
 
 ### Premier test
 ```bash
 # Healthcheck
-curl http://localhost:8000/health
+curl http://localhost:8008/health
 
 # Prédiction (avec token)
-curl -X POST http://localhost:8000/api/predict \
+curl -X POST http://localhost:8008/api/predict \
   -H "Authorization: Bearer VOTRE_TOKEN" \
   -F "file=@test_image.jpg" \
   -F "rgpd_consent=true"
 
 # Métriques Prometheus
-curl http://localhost:8000/metrics
+curl http://localhost:9098/metrics
 ```
 
 ## 🔧 Configuration
