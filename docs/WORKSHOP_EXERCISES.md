@@ -17,7 +17,7 @@ Monitorer le temps de réponse des prédictions.
 
 **Ajouter** :
 ```python
-# TODO: Créer métrique histogram pour latence
+# DONE: Créer métrique histogram pour latence
 inference_time_histogram = Histogram(
     'cv_inference_time_seconds',
     'Temps d\'inférence en secondes'
@@ -32,7 +32,7 @@ def track_inference_time(inference_time_ms: float):
 
 Dans la fonction `predict()`, **ajouter** :
 ```python
-# TODO: Mesurer et tracker le temps d'inférence
+# DONE: Mesurer et tracker le temps d'inférence
 start_time = time.time()
 # ... code de prédiction ...
 inference_time_ms = (time.time() - start_time) * 1000
@@ -82,6 +82,7 @@ Tracker les retours utilisateurs (positifs/négatifs).
 
 1. **Métrique Prometheus** :
 ```python
+# TODO: Créer métrique counter pour feedback
 feedback_counter = Counter(
     'cv_user_feedback_total',
     'Nombre de feedbacks utilisateurs',
@@ -89,10 +90,13 @@ feedback_counter = Counter(
 )
 ```
 
+- [ ] : modifier feedback
 2. **Route** : Modifier `/feedback` pour appeler `track_feedback()`
 
+- [ ] : modifier feedback
 3. **Alerte** : Si taux de feedback négatif > 50% pendant 10min
 
+- [ ] : ajouter panel piechart
 4. **Dashboard Grafana** : Panel pie chart pour répartition positive/negative
 
 ---
@@ -145,10 +149,10 @@ Ajouter dans `.github/workflows/deploy.yml` **AVANT** le déploiement :
 
 ## ✅ Checkpoints de Validation
 
-- [ ] Métrique inference_time visible dans Prometheus
-- [ ] Alerte high_latency configurée
-- [ ] Dashboard Grafana affiche la latence
-- [ ] Notification Discord reçue en cas d'alerte
+- [x] Métrique inference_time visible dans Prometheus
+- [x] Alerte high_latency configurée
+- [x] Dashboard Grafana affiche la latence
+- [x] Notification Discord reçue en cas d'alerte
 - [ ] Métrique feedback_counter fonctionnelle
 - [ ] 2 métriques custom implémentées
 - [ ] Tests automatisés dans CI/CD

@@ -135,7 +135,12 @@ jobs:
             cd docker
             
             # Arrêter les containers existants
-            docker compose -p cv-${STUDENT_ID} down 2>/dev/null || true
+            echo "🗑️ Arrêt et suppression des containers et volumes orphelins..."
+            docker compose -p cv-${STUDENT_ID} down --remove-orphans 2>/dev/null || true
+            
+            # Nettoyage des images Docker inutilisées
+            echo "🧹 Nettoyage des images Docker inutilisées..."
+            docker image prune -af --filter "until=24h"
             
             # Build
             echo "🔨 Build des images..."
@@ -152,10 +157,6 @@ jobs:
             # Vérifier l'état
             echo "✅ État des containers:"
             docker compose -p cv-${STUDENT_ID} ps
-            
-            # Cleanup
-            echo "🧹 Nettoyage..."
-            docker image prune -af --filter "until=24h"
             
             echo "✅ Déploiement terminé pour ${STUDENT_ID}"
           ENDSSH
