@@ -2,7 +2,7 @@
 
 ## Votre Identifiant
 
-Vous avez été assigné : **STUDENTXX** (remplacer XX par votre numéro)
+Vous avez été assigné : **STUDENT08** (remplacer XX par votre numéro)
 
 ## URLs d'Accès
 
