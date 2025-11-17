@@ -57,7 +57,7 @@ from src.database.feedback_service import FeedbackService  # 📊 CRUD feedbacks
 
 # Monitoring V2 (Plotly dashboards - conservé)
 from src.monitoring.dashboard_service import DashboardService  # 📈 Graphiques Plotly
-
+from src.monitoring.prometheus_metrics import track_inference_time  # 📊 Prometheus tracking
 # ═══════════════════════════════════════════════════════════════════════════
 # 🆕 V3 - CONDITIONAL IMPORTS (activation optionnelle)
 # ═══════════════════════════════════════════════════════════════════════════
@@ -285,6 +285,7 @@ async def predict_api(
         # ─────────────────────────────────────────────────────────────────────
         end_time = time.perf_counter()
         inference_time_ms = int((end_time - start_time) * 1000)
+        track_inference_time(inference_time_ms)
         # Conversion secondes → millisecondes (plus lisible pour latence)
         # Typage int : évite JSON avec .567823478 ms
         

@@ -445,6 +445,13 @@ services:
       # 💡 service_started suffit (pas de healthcheck pour Prometheus ici)
       # Grafana tolère les datasources temporairement inaccessibles
 
+  # postgres_exporter:
+  #   image: quay.io/prometheuscommunity/postgres-exporter
+  #   environment:
+  #     DATA_SOURCE_NAME: "postgresql://user:pass@postgres:5432/db?sslmode=disable"
+  #   ports:
+  #     - "9187:9187"
+
 # ═══════════════════════════════════════════════════════════════════════════════
 # 📦 VOLUMES - Persistance des données
 # ═══════════════════════════════════════════════════════════════════════════════

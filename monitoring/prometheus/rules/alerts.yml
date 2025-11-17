@@ -45,6 +45,16 @@ groups:
       # ═══════════════════════════════════════════════════════════════════════
       # 🚨 ALERTE 3 : Base de données déconnectée
       # ═══════════════════════════════════════════════════════════════════════
+
+      - alert: alert_high_latency
+        expr: rate(cv_inference_time_seconds_sum[5m]) / rate(cv_inference_time_seconds_count[5m]) > 2
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Latence élevée détectée"
+          description: "Latence moyenne > 2s pendant 2 minutes"
+
       - alert: DatabaseDisconnected
         expr: cv_database_connected == 0
         # 🔍 EXPRESSION SIMPLE (Gauge binaire)
