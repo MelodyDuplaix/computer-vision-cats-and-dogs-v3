@@ -57,7 +57,6 @@ from src.database.feedback_service import FeedbackService  # 📊 CRUD feedbacks
 
 # Monitoring V2 (Plotly dashboards - conservé)
 from src.monitoring.dashboard_service import DashboardService  # 📈 Graphiques Plotly
-from src.monitoring.prometheus_metrics import track_inference_time  # 📊 Prometheus tracking
 # ═══════════════════════════════════════════════════════════════════════════
 # 🆕 V3 - CONDITIONAL IMPORTS (activation optionnelle)
 # ═══════════════════════════════════════════════════════════════════════════
@@ -79,17 +78,7 @@ ENABLE_DISCORD = os.getenv('DISCORD_WEBHOOK_URL') is not None
 # 📢 Flag activation Discord (présence du webhook suffit)
 # Logique : si URL fournie → intention d'utiliser Discord
 
-# ─────────────────────────────────────────────────────────────────────────────
-# 🔄 DÉCLARATION VARIABLES GLOBALES (évite NameError si imports échouent)
-# ─────────────────────────────────────────────────────────────────────────────
-# 💡 PATTERN : Initialiser à None puis assigner conditionnellement
-# Alternative : wrapper dans try/except à chaque usage (plus verbeux)
-alert_high_latency = None
-alert_database_disconnected = None
-notifier = None
-track_prediction = None
-track_feedback = None
-update_db_status = None
+
 
 # ─────────────────────────────────────────────────────────────────────────────
 # 📊 IMPORT PROMETHEUS (si activé)
@@ -98,11 +87,15 @@ if ENABLE_PROMETHEUS:
     try:
         from src.monitoring.prometheus_metrics import (
             update_db_status as _update_db_status,   # Gauge database_status
-            track_feedback as _track_feedback         # Counter user_feedback_total
+            track_feedback as _track_feedback,         # Counter user_feedback_total
+            track_low_confidence_prediction as _track_low_confidence_prediction,
+            track_inference_time as _track_inference_time
         )
         # 🔄 Renommage avec underscore pour éviter shadowing (bonne pratique)
         update_db_status = _update_db_status
         track_feedback = _track_feedback
+        track_inference_time = _track_inference_time
+        track_low_confidence_prediction = _track_low_confidence_prediction
         print("✅ Prometheus tracking functions loaded")
     except ImportError as e:
         ENABLE_PROMETHEUS = False  # Désactivation silencieuse
@@ -297,6 +290,10 @@ async def predict_api(
         proba_cat = result['probabilities']['cat'] * 100  # 0.95 → 95.0
         proba_dog = result['probabilities']['dog'] * 100
         # Stockage en pourcentage (plus intuitif en base)
+        
+        if ENABLE_PROMETHEUS and track_low_confidence_prediction:
+            if result['confidence'] < 0.60:
+                track_low_confidence_prediction(result["prediction"].lower())
         
         # ─────────────────────────────────────────────────────────────────────
         # 💾 SAUVEGARDE EN BASE DE DONNÉES (V2 - inchangé)
