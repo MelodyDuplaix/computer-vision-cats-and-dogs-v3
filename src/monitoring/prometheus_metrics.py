@@ -130,6 +130,15 @@ def track_feedback(feedback_type: str):
     feedback_counter.labels(feedback_type=feedback_type).inc()
     
     
+low_confidence_predictions_counter = Counter(
+    'cv_low_confidence_predictions_total',
+    'Nombre de prédictions faibles de confiance',
+    ['prediction_result'],  # 'cat' ou 'dog'
+)
+    
+def track_low_confidence_prediction(prediction_result: str):
+    """Enregistre une prédiction faible de confiance"""
+    low_confidence_predictions_counter.labels(prediction_result=prediction_result).inc()
     
     
 # ═══════════════════════════════════════════════════════════════════════════
