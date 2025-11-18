@@ -82,7 +82,7 @@ Tracker les retours utilisateurs (positifs/négatifs).
 
 1. **Métrique Prometheus** :
 ```python
-# TODO: Créer métrique counter pour feedback
+# DONE: Créer métrique counter pour feedback
 feedback_counter = Counter(
     'cv_user_feedback_total',
     'Nombre de feedbacks utilisateurs',
@@ -90,13 +90,13 @@ feedback_counter = Counter(
 )
 ```
 
-- [ ] : modifier feedback
+- [x] : modifier feedback
 2. **Route** : Modifier `/feedback` pour appeler `track_feedback()`
 
-- [ ] : modifier feedback
-3. **Alerte** : Si taux de feedback négatif > 50% pendant 10min
+- [x] : ajouter alerte feedback
+1. **Alerte** : Si taux de feedback négatif > 50% pendant 10min
 
-- [ ] : ajouter panel piechart
+- [x] : ajouter panel piechart
 4. **Dashboard Grafana** : Panel pie chart pour répartition positive/negative
 
 ---

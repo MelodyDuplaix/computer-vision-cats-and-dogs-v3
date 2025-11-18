@@ -25,6 +25,65 @@
 apiVersion: 1
 groups:
   - orgId: 1
+    name: test
+    folder: Computer Vision
+    interval: 2m
+    rules:
+      - uid: df4hdpf9ni0w0d
+        title: bad_feedback_rate
+        condition: C
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 600
+              to: 0
+            datasourceUid: prometheus
+            model:
+              editorMode: code
+              expr: sum(cv_user_feedback_total{feedback_type="negative"}) / sum(cv_user_feedback_total)
+              instant: true
+              intervalMs: 1000
+              legendFormat: __auto
+              maxDataPoints: 43200
+              range: false
+              refId: A
+          - refId: C
+            datasourceUid: __expr__
+            model:
+              conditions:
+                  - evaluator:
+                      params:
+                          - 0.5
+                      type: gt
+                    operator:
+                      type: and
+                    query:
+                      params:
+                          - C
+                    reducer:
+                      params: []
+                      type: last
+                    type: query
+              datasource:
+                  type: __expr__
+                  uid: __expr__
+              expression: A
+              intervalMs: 1000
+              maxDataPoints: 43200
+              refId: C
+              type: threshold
+        noDataState: NoData
+        execErrState: Error
+        for: 2m
+        keepFiringFor: 2m
+        annotations:
+          description: Le taux de feedback négatif moyen est passé au dessus de 0.5
+          summary: Taux de feedback négatif elevé
+        labels: {}
+        isPaused: false
+        notification_settings:
+          receiver: Discord CV Alerts
+  - orgId: 1
     name: 2min
     folder: Computer Vision
     interval: 2m

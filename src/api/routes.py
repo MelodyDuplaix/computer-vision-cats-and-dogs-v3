@@ -97,10 +97,12 @@ update_db_status = None
 if ENABLE_PROMETHEUS:
     try:
         from src.monitoring.prometheus_metrics import (
-            update_db_status as _update_db_status   # Gauge database_status
+            update_db_status as _update_db_status,   # Gauge database_status
+            track_feedback as _track_feedback         # Counter user_feedback_total
         )
         # 🔄 Renommage avec underscore pour éviter shadowing (bonne pratique)
         update_db_status = _update_db_status
+        track_feedback = _track_feedback
         print("✅ Prometheus tracking functions loaded")
     except ImportError as e:
         ENABLE_PROMETHEUS = False  # Désactivation silencieuse
@@ -432,6 +434,11 @@ async def update_feedback(
                     detail="user_feedback doit être 0 ou 1"
                 )
             record.user_feedback = user_feedback
+
+            # 🆕 V3 : Tracking du feedback dans Prometheus
+            if ENABLE_PROMETHEUS and track_feedback:
+                feedback_type = "positive" if user_feedback == 1 else "negative"
+                track_feedback(feedback_type)
         
         if user_comment:
             record.user_comment = user_comment
