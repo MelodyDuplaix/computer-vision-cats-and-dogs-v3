@@ -40,7 +40,7 @@ groups:
             datasourceUid: prometheus
             model:
               editorMode: code
-              expr: sum(cv_user_feedback_total{feedback_type="negative"}) / sum(cv_user_feedback_total)
+              expr: (sum(cv_user_feedback_total{feedback_type="negative"}) / sum(cv_user_feedback_total)) unless sum(cv_user_feedback_total) == 0
               instant: true
               intervalMs: 1000
               legendFormat: __auto
