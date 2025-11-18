@@ -144,6 +144,7 @@ baseenv/
 ENV/
 env.bak/
 venv.bak/
+.ssh_key
 
 # Spyder project settings
 .spyderproject

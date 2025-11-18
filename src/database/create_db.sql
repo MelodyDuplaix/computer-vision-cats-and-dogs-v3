@@ -1,6 +1,6 @@
 /* PLUS NECESSAIRE EN VERSION 3 AVEC BDD CREEE VIA DOCKER
 -- Création de l'utilisateur
-CREATE USER catsdogs WITH PASSWORD '?C@TS&D0GS!';
+CREATE USER catsdogs WITH PASSWORD 'keyToken';
 
 -- Création de la base de données
 CREATE DATABASE cats_dogs_db OWNER catsdogs;

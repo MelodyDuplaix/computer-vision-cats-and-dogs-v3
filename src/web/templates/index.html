@@ -90,7 +90,7 @@
             </div>
             <div class="card-body">
                 <ol>
-                    <li>Obtenir le token d'authentification : <code>?C@TS&D0GS!</code></li>
+                    <li>Obtenir le token d'authentification : <code>keyToken</code></li>
                     <li>Envoyer une requête POST à <code>/api/predict</code></li>
                     <li>Inclure l'image dans le body et le token dans les headers</li>
                     <li>Recevoir la prédiction avec le niveau de confiance</li>
@@ -99,7 +99,7 @@
                 <div class="mt-3">
                     <h6>Exemple cURL :</h6>
                     <pre class="bg-dark text-light p-3 rounded"><code>curl -X POST "http://localhost:8000/api/predict" \
-     -H "Authorization: Bearer ?C@TS&D0GS!" \
+     -H "Authorization: Bearer keyToken" \
      -F "file=@mon_image.jpg"</code></pre>
                 </div>
             </div>

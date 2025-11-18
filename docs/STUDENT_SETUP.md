@@ -72,7 +72,7 @@ GitHub Actions se lance automatiquement → Vérifier dans l'onglet **Actions**
 
 ## Accès SSH au VPS (Debug)
 ```bash
-ssh ubuntu@51.91.251.234
+ssh -i .\.ssh_key ubuntu@51.91.251.234
 cd ~/apps/VOTRE-REPO-NAME-studentXX/docker
 docker compose -p cv-studentXX ps
 docker compose -p cv-studentXX logs
