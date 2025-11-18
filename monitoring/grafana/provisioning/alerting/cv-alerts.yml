@@ -23,8 +23,66 @@
 # ═══════════════════════════════════════════════════════════════════════════════
 
 apiVersion: 1
-
 groups:
+  - orgId: 1
+    name: 2min
+    folder: Computer Vision
+    interval: 2m
+    rules:
+      - uid: cf4ehtp1he3uob
+        title: alert_high_latency
+        condition: C
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 600
+              to: 0
+            datasourceUid: prometheus
+            model:
+              editorMode: code
+              expr: rate(cv_inference_time_seconds_sum[5m]) / rate(cv_inference_time_seconds_count[5m])
+              instant: true
+              intervalMs: 1000
+              legendFormat: __auto
+              maxDataPoints: 43200
+              range: false
+              refId: A
+          - refId: C
+            datasourceUid: __expr__
+            model:
+              conditions:
+                  - evaluator:
+                      params:
+                          - 2
+                      type: gt
+                    operator:
+                      type: and
+                    query:
+                      params:
+                          - C
+                    reducer:
+                      params: []
+                      type: last
+                    type: query
+              datasource:
+                  type: __expr__
+                  uid: __expr__
+              expression: A
+              intervalMs: 1000
+              maxDataPoints: 43200
+              refId: C
+              type: threshold
+        noDataState: NoData
+        execErrState: Error
+        for: 2m
+        annotations:
+          description: Latence moyenne > 2s pendant 2 minutes
+          summary: Latence élevée détectée
+        labels:
+          severity: critical
+        isPaused: false
+        notification_settings:
+          receiver: Discord CV Alerts
   # ─────────────────────────────────────────────────────────────────────────
   # 📁 GROUPE D'ALERTES : Computer Vision Monitoring
   # ─────────────────────────────────────────────────────────────────────────
