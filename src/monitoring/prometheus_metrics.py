@@ -144,12 +144,12 @@ def track_low_confidence_prediction(prediction_result: str):
 abnormal_image_size_counter = Counter(
     'cv_abnormal_image_size_total',
     'Compteur d\'images avec une taille anormale',
-    ['type']  # 'small' or 'large'
+    ['type']  # 'small' or 'large' or 'normal'
 )
 
-IMAGE_SIZE_LOWER_THRESHOLD = 500 * 500
+IMAGE_SIZE_LOWER_THRESHOLD = 64 * 64
 
-IMAGE_SIZE_UPPER_THRESHOLD = 500 * 500
+IMAGE_SIZE_UPPER_THRESHOLD = 5000 * 5000
     
 def track_image_size(width: int, height: int):
     """
@@ -161,6 +161,8 @@ def track_image_size(width: int, height: int):
         abnormal_image_size_counter.labels(type='small').inc()
     elif size > IMAGE_SIZE_UPPER_THRESHOLD:
         abnormal_image_size_counter.labels(type='large').inc()
+    else:
+        abnormal_image_size_counter.labels(type='normal').inc()
     
 # ═══════════════════════════════════════════════════════════════════════════
 # 🎓 CONCEPTS AVANCÉS (pour aller plus loin)

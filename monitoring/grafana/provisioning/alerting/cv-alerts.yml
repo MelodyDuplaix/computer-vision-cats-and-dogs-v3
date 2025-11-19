@@ -72,7 +72,7 @@ groups:
               maxDataPoints: 43200
               refId: C
               type: threshold
-        noDataState: Normal
+        noDataState: OK
         execErrState: Error
         for: 2m
         keepFiringFor: 2m
@@ -131,7 +131,7 @@ groups:
               maxDataPoints: 43200
               refId: C
               type: threshold
-        noDataState: Normal
+        noDataState: OK
         execErrState: Error
         for: 2m
         keepFiringFor: 2m
@@ -190,7 +190,7 @@ groups:
               maxDataPoints: 43200
               refId: C
               type: Normal
-        noDataState: Normal
+        noDataState: OK
         execErrState: Error
         for: 2m
         annotations:
