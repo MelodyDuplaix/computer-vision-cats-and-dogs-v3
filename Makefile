@@ -3,9 +3,7 @@
 help: ## Affiche cette aide
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
 
-# ============================================
-# Commandes V2 (Conservées)
-# ============================================
+
 install: ## Installe les dépendances
 	python -m venv venv
 	pip install -r requirements/monitoring.txt
@@ -16,10 +14,6 @@ test: ## Lance les tests
 
 run: ## Lance l'API localement
 	python scripts/run_api.py
-
-# ============================================
-# Commandes V3 (Nouvelles)
-# ============================================
 docker-up: ## Démarre tous les services Docker
 	docker-compose -f docker/docker-compose.yml up -d
 

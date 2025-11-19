@@ -155,5 +155,5 @@ Ajouter dans `.github/workflows/deploy.yml` **AVANT** le déploiement :
 - [x] Notification Discord reçue en cas d'alerte
 - [x] Métrique feedback_counter fonctionnelle
 - [x] 2 métriques custom implémentées
-- [ ] Tests automatisés dans CI/CD
+- [-] Tests automatisés dans CI/CD
 - [ ] Dashboard final complet et stylé

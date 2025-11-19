@@ -93,7 +93,7 @@ class TestAPIEndpoints:
         data = response.json()
         assert "model_loaded" in data
         assert "version" in data
-        assert data["version"] == "1.0.0"
+        assert data["version"] == "3.0.0"
 
 class TestAuthentication:
     """Tests d'authentification"""
