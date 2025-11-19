@@ -107,7 +107,7 @@ Choisir **2 métriques** parmi :
 
 - Distribution des prédictions (cats vs dogs)
 - Nombre d'utilisateurs uniques
-- Taux de prédictions avec faible confiance (< 60%)
+- [x] Taux de prédictions avec faible confiance (< 60%)
 - Nombre de requêtes par heure
 - Taille moyenne des images uploadées
 
