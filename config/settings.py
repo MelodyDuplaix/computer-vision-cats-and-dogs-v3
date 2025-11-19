@@ -20,15 +20,15 @@ TEMP_DIR = Path(os.environ.get("TEMP_DIR", "/tmp/cats_dogs"))
 
 # Base de données
 ## Récupération des variables d'environnement et Construction de l'URL PostgreSQL
-DB_HOST = os.getenv('DB_HOST', 'postgres')
-DB_PORT = os.getenv('DB_PORT', '5432')
-DB_NAME = os.getenv('DB_NAME', 'cats_dogs_db')
-DB_USER = os.getenv('DB_USER', 'catsdogs')
-DB_PWD = os.getenv('DB_PWD', '?C@TS&D0GS!')
-DB_PWD_ENCODED = quote_plus(DB_PWD) if DB_PWD else '' # Encodage du mot de passe pour les caractères spéciaux
+DB_HOST = os.getenv('DB_HOST')
+DB_PORT = os.getenv('DB_PORT')
+DB_NAME = os.getenv('DB_NAME')
+DB_USER = os.getenv('DB_USER')
+DB_PWD = os.getenv('DB_PWD')
+DB_PWD_ENCODED = quote_plus(DB_PWD) if DB_PWD else None # Encodage du mot de passe pour les caractères spéciaux
 DB_URL = f"postgresql://{DB_USER}:{DB_PWD_ENCODED}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 DB_URL_MASKED = DB_URL.replace(DB_PWD_ENCODED, '***') if DB_PWD_ENCODED else DB_URL # Masquage du mdp dans l'URL (sert uniquement pour l'affichage dans le terminal, de manière sécurisée)
-DB_TABLE_MONITORING = os.getenv('DB_TABLE_MONITORING', 'predictions_feedback')
+DB_TABLE_MONITORING = os.getenv('DB_TABLE_MONITORING')
 
 
 # Modèles
