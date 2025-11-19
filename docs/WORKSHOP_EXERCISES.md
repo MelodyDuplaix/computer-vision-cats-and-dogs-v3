@@ -154,6 +154,6 @@ Ajouter dans `.github/workflows/deploy.yml` **AVANT** le déploiement :
 - [x] Dashboard Grafana affiche la latence
 - [x] Notification Discord reçue en cas d'alerte
 - [x] Métrique feedback_counter fonctionnelle
-- [ ] 2 métriques custom implémentées
+- [x] 2 métriques custom implémentées
 - [ ] Tests automatisés dans CI/CD
 - [ ] Dashboard final complet et stylé
