@@ -147,9 +147,9 @@ abnormal_image_size_counter = Counter(
     ['type']  # 'small' or 'large'
 )
 
-IMAGE_SIZE_LOWER_THRESHOLD = 64 * 64
+IMAGE_SIZE_LOWER_THRESHOLD = 500 * 500
 
-IMAGE_SIZE_UPPER_THRESHOLD = 2000 * 2000
+IMAGE_SIZE_UPPER_THRESHOLD = 500 * 500
     
 def track_image_size(width: int, height: int):
     """
