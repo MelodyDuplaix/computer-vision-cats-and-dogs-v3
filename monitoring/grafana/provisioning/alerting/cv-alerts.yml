@@ -49,11 +49,11 @@ groups:
               maxDataPoints: 43200
               refId: C
               type: threshold
-        noDataState: NoData
+        noDataState: OK
         execErrState: Error
         annotations:
-          description: Le taux d'images anormales a dépassé les 40%.
-          summary: Trop d'images trop anormales
+          description: Le taux d'images de taille anormales a dépassé les 40%.
+          summary: Trop d'images taille anormales
         labels: {}
         isPaused: false
         notification_settings:
