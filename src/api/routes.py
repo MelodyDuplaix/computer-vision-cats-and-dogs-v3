@@ -296,7 +296,7 @@ async def predict_api(
         # Stockage en pourcentage (plus intuitif en base)
         
         if ENABLE_PROMETHEUS and track_low_confidence_prediction:
-            if result['confidence'] < 0.60:
+            if result['confidence'] < 0.55:
                 track_low_confidence_prediction(result["prediction"].lower())
         
         if ENABLE_PROMETHEUS and track_image_size:
