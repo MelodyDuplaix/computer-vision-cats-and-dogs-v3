@@ -189,7 +189,7 @@ groups:
               intervalMs: 1000
               maxDataPoints: 43200
               refId: C
-              type: Normal
+              type: threshold
         noDataState: OK
         execErrState: Error
         for: 2m
