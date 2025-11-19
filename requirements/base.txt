@@ -29,5 +29,6 @@ psycopg2-binary
 pydantic
 plotly
 pytest
+pillow
 
 # Projet V3 - MLOPS

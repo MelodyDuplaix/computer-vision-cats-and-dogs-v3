@@ -28,6 +28,8 @@ Illustre l'intégration entre inférence ML, base de données, et monitoring mul
 
 ═══════════════════════════════════════════════════════════════════════════════
 """
+import io
+from PIL import Image
 from fastapi import APIRouter, File, UploadFile, HTTPException, Depends, Request, Form
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
@@ -89,13 +91,15 @@ if ENABLE_PROMETHEUS:
             update_db_status as _update_db_status,   # Gauge database_status
             track_feedback as _track_feedback,         # Counter user_feedback_total
             track_low_confidence_prediction as _track_low_confidence_prediction,
-            track_inference_time as _track_inference_time
+            track_inference_time as _track_inference_time,
+            track_image_size as _track_image_size
         )
         # 🔄 Renommage avec underscore pour éviter shadowing (bonne pratique)
         update_db_status = _update_db_status
         track_feedback = _track_feedback
         track_inference_time = _track_inference_time
         track_low_confidence_prediction = _track_low_confidence_prediction
+        track_image_size = _track_image_size
         print("✅ Prometheus tracking functions loaded")
     except ImportError as e:
         ENABLE_PROMETHEUS = False  # Désactivation silencieuse
@@ -294,6 +298,12 @@ async def predict_api(
         if ENABLE_PROMETHEUS and track_low_confidence_prediction:
             if result['confidence'] < 0.60:
                 track_low_confidence_prediction(result["prediction"].lower())
+        
+        if ENABLE_PROMETHEUS and track_image_size:
+            # enregistrement de la largeur et hauteur de l'image en pixel, à partir des données de l'image
+            image = Image.open(io.BytesIO(image_data))
+            width, height = image.size
+            track_image_size(width, height)
         
         # ─────────────────────────────────────────────────────────────────────
         # 💾 SAUVEGARDE EN BASE DE DONNÉES (V2 - inchangé)

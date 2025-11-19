@@ -141,6 +141,27 @@ def track_low_confidence_prediction(prediction_result: str):
     low_confidence_predictions_counter.labels(prediction_result=prediction_result).inc()
     
     
+abnormal_image_size_counter = Counter(
+    'cv_abnormal_image_size_total',
+    'Compteur d\'images avec une taille anormale',
+    ['type']  # 'small' or 'large'
+)
+
+IMAGE_SIZE_LOWER_THRESHOLD = 64 * 64
+
+IMAGE_SIZE_UPPER_THRESHOLD = 2000 * 2000
+    
+def track_image_size(width: int, height: int):
+    """
+    Incrémente un compteur si la taille de l'image est considérée comme anormale.
+    """
+    size = width * height
+
+    if size < IMAGE_SIZE_LOWER_THRESHOLD:
+        abnormal_image_size_counter.labels(type='small').inc()
+    elif size > IMAGE_SIZE_UPPER_THRESHOLD:
+        abnormal_image_size_counter.labels(type='large').inc()
+    
 # ═══════════════════════════════════════════════════════════════════════════
 # 🎓 CONCEPTS AVANCÉS (pour aller plus loin)
 # ═══════════════════════════════════════════════════════════════════════════
