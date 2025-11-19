@@ -325,7 +325,7 @@
       "targets": [
         {
           "editorMode": "code",
-          "expr": "sum(cv_low_confidence_predictions_total) / sum(cv_inference_time_seconds_count)",
+          "expr": "sum(cv_low_confidence_predictions_total{prediction_confidence='low'}) / sum(cv_low_confidence_predictions_total)",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
