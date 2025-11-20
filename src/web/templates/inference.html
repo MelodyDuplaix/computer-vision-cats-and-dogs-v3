@@ -82,6 +82,10 @@
                     <button type="button" class="btn btn-secondary btn-sm" onclick="submitComment()">
                         <i class="bi bi-send"></i> Envoyer le commentaire
                     </button>
+                    <div class="alert alert-success mt-2" style="display: none;" id="feedbackSuccessMessage">
+                        <i class="bi bi-check-circle"></i> <div id="feedbackSuccessText"></div>
+
+                    </div>
                 </div>
                 {% endif %}
             </div>
@@ -94,6 +98,16 @@
 <script>
 // Variable globale pour stocker l'ID du feedback
 let currentFeedbackId = null;
+const fileInput = document.getElementById('imageFile');
+const tokenInput = document.getElementById('apiToken');
+const rgpdConsent = document.getElementById('rgpdConsent');
+const loading = document.getElementById('loading');
+const result = document.getElementById('result');
+const feedbackSection = document.getElementById('feedbackSection');
+const predictBtn = document.getElementById('predictBtn');
+const feedbackSuccessMessage = document.getElementById('feedbackSuccessMessage');
+const feedbackSuccessText = document.getElementById('feedbackSuccessText');
+const commentInput = document.getElementById('userComment');
 
 // Prévisualisation de l'image
 document.getElementById('imageFile').addEventListener('change', function(e) {
@@ -114,16 +128,11 @@ document.getElementById('imageFile').addEventListener('change', function(e) {
 document.getElementById('predictionForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     
-    const fileInput = document.getElementById('imageFile');
-    const tokenInput = document.getElementById('apiToken');
-    const rgpdConsent = document.getElementById('rgpdConsent').checked;
-    const loading = document.getElementById('loading');
-    const result = document.getElementById('result');
-    const feedbackSection = document.getElementById('feedbackSection');
-    const predictBtn = document.getElementById('predictBtn');
+    ResetFeedBackCommentSection();
     
     const file = fileInput.files[0];
     const token = tokenInput.value;
+    const rgpçdConsentValue = rgpdConsent.checked;
     
     if (!file) {
         alert('Veuillez sélectionner une image');
@@ -139,7 +148,7 @@ document.getElementById('predictionForm').addEventListener('submit', async funct
     try {
         const formData = new FormData();
         formData.append('file', file);
-        formData.append('rgpd_consent', rgpdConsent);
+        formData.append('rgpd_consent', rgpçdConsentValue);
         
         const response = await fetch('/api/predict', {
             method: 'POST',
@@ -183,7 +192,7 @@ document.getElementById('predictionForm').addEventListener('submit', async funct
             result.style.display = 'block';
             
             // Affichage de la section feedback si RGPD accepté
-            if (rgpdConsent && currentFeedbackId) {
+            if (rgpçdConsentValue && currentFeedbackId) {
                 feedbackSection.style.display = 'block';
             }
             
@@ -231,12 +240,9 @@ async function submitFeedback(feedbackValue) {
         if (response.ok) {
             const feedbackText = feedbackValue === 1 ? 'Merci pour votre retour positif ! 👍' : 'Merci pour votre retour. Nous allons nous améliorer ! 💪';
             
-            // Affichage d'un message de confirmation
-            const feedbackSection = document.getElementById('feedbackSection');
-            const confirmMessage = document.createElement('div');
-            confirmMessage.className = 'alert alert-success mt-2';
-            confirmMessage.innerHTML = `<i class="bi bi-check-circle"></i> ${feedbackText}`;
-            feedbackSection.appendChild(confirmMessage);
+            // Affichage du message de feedback
+            feedbackSuccessMessage.style.display = 'block';
+            feedbackSuccessText.innerText = feedbackText;
             
             // Désactivation des boutons de feedback
             const feedbackButtons = feedbackSection.querySelectorAll('.btn-group button');
@@ -258,7 +264,6 @@ async function submitComment() {
         return;
     }
     
-    const commentInput = document.getElementById('userComment');
     const comment = commentInput.value.trim();
     
     if (!comment) {
@@ -278,11 +283,11 @@ async function submitComment() {
         
         if (response.ok) {
             // Message de confirmation
-            const feedbackSection = document.getElementById('feedbackSection');
-            const confirmMessage = document.createElement('div');
-            confirmMessage.className = 'alert alert-info mt-2';
-            confirmMessage.innerHTML = '<i class="bi bi-envelope-check"></i> Commentaire envoyé avec succès ! Merci 📝';
-            feedbackSection.appendChild(confirmMessage);
+            const textretourcomment = 'Votre commentaire a été envoyé. Merci pour votre contribution ! 📝';
+
+            // Affichage du message pour commentaire
+            feedbackSuccessMessage.style.display = 'block';
+            feedbackSuccessText.innerText = textretourcomment;
             
             // Vider et désactiver le champ commentaire
             commentInput.value = '';
@@ -296,5 +301,23 @@ async function submitComment() {
         alert('Erreur de communication avec le serveur');
     }
 }
+
+function ResetFeedBackCommentSection() {
+    // Réinitialisation de la section feedback
+    feedbackSection.style.display = 'none';
+
+    // Réinitialisation du champ commentaire
+    commentInput.value = '';
+    commentInput.disabled = false;
+
+    // Réactivation des boutons de feedback
+    const feedbackButtons = feedbackSection.querySelectorAll('.btn-group button');
+    feedbackButtons.forEach(btn => btn.disabled = false);
+
+    // Masquer le message de succès
+    feedbackSuccessMessage.style.display = 'none';
+    feedbackSuccessText.innerText = ''; 
+}
+
 </script>
 {% endblock %}
