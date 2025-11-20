@@ -512,7 +512,7 @@
         ]
       },
       "gridPos": {
-        "h": 7,
+        "h": 12,
         "w": 12,
         "x": 12,
         "y": 5
@@ -669,5 +669,5 @@
   "timezone": "",
   "title": "Computer Vision - Cats & Dogs (Workshop)",
   "uid": "cv-cats-dogs-workshop",
-  "version": 9
+  "version": 10
 }
