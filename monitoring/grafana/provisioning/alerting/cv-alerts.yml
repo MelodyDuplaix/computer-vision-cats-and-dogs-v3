@@ -7,7 +7,7 @@ groups:
     interval: 10m
     rules:
       - uid: ff4l9anvqodfkb
-        title: abnormal_image_size
+        title: alertes app -> discord
         condition: C
         data:
           - refId: A
@@ -58,11 +58,6 @@ groups:
         isPaused: false
         notification_settings:
           receiver: Discord CV Alerts
-  - orgId: 1
-    name: confidence
-    folder: Computer Vision
-    interval: 2m
-    rules:
       - uid: cf4i3rmsvtla8e
         title: low_confidence_alert
         condition: C
@@ -117,11 +112,6 @@ groups:
         isPaused: false
         notification_settings:
           receiver: Discord CV Alerts
-  - orgId: 1
-    name: test
-    folder: Computer Vision
-    interval: 2m
-    rules:
       - uid: df4hdpf9ni0w0d
         title: bad_feedback_rate
         condition: C
@@ -176,11 +166,6 @@ groups:
         isPaused: false
         notification_settings:
           receiver: Discord CV Alerts
-  - orgId: 1
-    name: 2min
-    folder: Computer Vision
-    interval: 2m
-    rules:
       - uid: cf4ehtp1he3uob
         title: alert_high_latency
         condition: C
@@ -235,11 +220,6 @@ groups:
         isPaused: false
         notification_settings:
           receiver: Discord CV Alerts
-  - orgId: 1
-    name: cv-monitoring
-    folder: Computer Vision
-    interval: 1m
-    rules:
       - uid: cv-db-disconnected
         title: Database Disconnected
         condition: C
