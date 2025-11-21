@@ -2,12 +2,12 @@
 apiVersion: 1
 groups:
   - orgId: 1
-    name: image_size
+    name: alertes app -> discord
     folder: Computer Vision
     interval: 10m
     rules:
       - uid: ff4l9anvqodfkb
-        title: alertes app -> discord
+        title: abnormal_image_size
         condition: C
         data:
           - refId: A
